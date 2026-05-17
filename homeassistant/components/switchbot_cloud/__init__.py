@@ -25,8 +25,14 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .const import DOMAIN, ENTRY_TITLE
 from .coordinator import SwitchBotCoordinator
+from .services import (
+    SERVICE_UPLOAD_IMAGE,
+    async_setup_services,
+    async_unload_services,
+)
 
 _LOGGER = getLogger(__name__)
+_SERVICE_SETUP_COUNT = 0
 PLATFORMS: list[Platform] = [
     Platform.BINARY_SENSOR,
     Platform.BUTTON,
@@ -360,6 +366,11 @@ async def async_setup_entry(
     )
     entry.runtime_data = SwitchbotCloudData(api=api, devices=switchbot_devices)
 
+    global _SERVICE_SETUP_COUNT
+    _SERVICE_SETUP_COUNT += 1
+    if _SERVICE_SETUP_COUNT == 1:
+        async_setup_services(hass)
+
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     await _initialize_webhook(hass, entry, api, coordinators_by_id)
@@ -371,7 +382,15 @@ async def async_unload_entry(
     hass: HomeAssistant, entry: SwitchbotCloudConfigEntry
 ) -> bool:
     """Unload a config entry."""
-    return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+    unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+
+    global _SERVICE_SETUP_COUNT
+    if unload_ok:
+        _SERVICE_SETUP_COUNT -= 1
+        if _SERVICE_SETUP_COUNT == 0:
+            async_unload_services(hass)
+
+    return unload_ok
 
 
 async def _initialize_webhook(

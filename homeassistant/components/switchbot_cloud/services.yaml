@@ -1,0 +1,20 @@
+upload_image:
+  name: Upload image to AI Art Frame
+  description: Upload an image to a SwitchBot AI Art Frame device. Provide either a URL or a local file path.
+  fields:
+    device_id:
+      required: true
+      selector:
+        device:
+          integration: switchbot_cloud
+          model: AI Art Frame
+    image_url:
+      name: Image URL
+      description: URL of the image to upload.
+      selector:
+        text:
+    image_path:
+      name: Image path
+      description: Local file path of the image to upload.
+      selector:
+        text:

@@ -1,4 +1,9 @@
 {
+  "services": {
+    "upload_image": {
+      "service": "mdi:image-plus"
+    }
+  },
   "entity": {
     "button": {
       "art_frame_next_picture": {

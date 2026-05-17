@@ -100,6 +100,41 @@
     },
     "device_offline": {
       "message": "SwitchBot Cloud device is offline."
+    },
+    "device_not_found": {
+      "message": "Device {device_id} not found in SwitchBot Cloud integration."
+    },
+    "invalid_device": {
+      "message": "Device {device_id} is not an AI Art Frame."
+    },
+    "file_not_found": {
+      "message": "Image file not found: {image_path}"
+    },
+    "no_image_source": {
+      "message": "Either image_url or image_path must be provided."
+    },
+    "upload_failed": {
+      "message": "Failed to upload image: {error}"
+    }
+  },
+  "services": {
+    "upload_image": {
+      "name": "Upload image to AI Art Frame",
+      "description": "Upload an image to a SwitchBot AI Art Frame device.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "The AI Art Frame device to upload to."
+        },
+        "image_url": {
+          "name": "Image URL",
+          "description": "URL of the image to upload."
+        },
+        "image_path": {
+          "name": "Image path",
+          "description": "Local file path of the image to upload."
+        }
+      }
     }
   }
 }

@@ -55,6 +55,13 @@ def mock_get_webook_configuration():
         yield mock_get_webook_configuration
 
 
+@pytest.fixture
+def mock_send_command():
+    """Mock send_command."""
+    with patch.object(SwitchBotAPI, "send_command") as mock_send_command:
+        yield mock_send_command
+
+
 @pytest.fixture(scope="package", autouse=True)
 def mock_after_command_refresh():
     """Mock after command refresh."""
